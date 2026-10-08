@@ -1,11 +1,11 @@
 #!/bin/zsh
-# 把选定的 16:9 和 3:4 封面导出成四个平台的标准 JPG（用 sips，抖音才认）。
+# 导出两张标准 JPG 封面（sips 导出，抖音能识别尺寸）。源图比例偏差超过 1% 就报错，不硬拉伸。
 # 用法：export_covers.sh <16比9源图> <3比4源图> <输出目录>
 set -e
-W="$1"; T="$2"; O="$3"; mkdir -p "$O"
-mk(){ sips -s format jpeg -s formatOptions 92 -z "$3" "$2" "$1" --out "$4" >/dev/null; }
-mk "$W" 1920 1080 "$O/B站_16比9_1920x1080.jpg"
-mk "$T" 1080 1440 "$O/小红书_3比4_1080x1440.jpg"
-mk "$T" 1080 1440 "$O/视频号_3比4_1080x1440.jpg"
-mk "$T" 1242 1656 "$O/抖音_3比4_1242x1656.jpg"
-for f in "$O"/*.jpg; do echo "$(sips -g pixelWidth -g pixelHeight "$f" | awk '/pixel/{printf $2" "}') $(basename "$f")"; done
+ratio(){ sips -g pixelWidth -g pixelHeight "$1" | awk '/pixelWidth/{w=$2}/pixelHeight/{h=$2}END{print w/h}'; }
+check(){ awk -v r="$(ratio "$1")" -v t="$2" -v f="$1" 'BEGIN{d=(r-t)/t; if(d<0)d=-d; if(d>0.01){print "比例不对：" f " 是 " r "，应为 " t; exit 1}}'; }
+check "$1" 1.7778; check "$2" 0.75
+mkdir -p "$3"
+sips -s format jpeg -s formatOptions 92 -z 1080 1920 "$1" --out "$3/B站_16比9_1920x1080.jpg" >/dev/null
+sips -s format jpeg -s formatOptions 92 -z 1656 1242 "$2" --out "$3/竖版3比4_1242x1656_小红书视频号抖音通用.jpg" >/dev/null
+ls "$3"
