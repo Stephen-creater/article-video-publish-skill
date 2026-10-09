@@ -9,3 +9,4 @@
 - 评审 82 分后修：脚本改绝对路径并支持相对参数；提示词统一放 `10_封面/<slug>/提示词_*.txt`；补全运行目录、配乐命令、余额确认、VMAF 命令、进度更新；export_covers.sh 加比例检查；去掉 README 与 SKILL.md 的重复。
 - 复评 91 分，再修 3 处：命令里的变量写成可直接执行；codex_image.sh 自动建输出目录；换语速时旧 tts_result 一起改名保留。
 - 修 codex_image.sh：带参考图时 -i 放在最前，避免提示词被当成图片文件（Codex 报 No prompt provided）。
+- 换声出片：补充 ASR 误报的判断方法；语速经验加一条（生产者 1.25）。
