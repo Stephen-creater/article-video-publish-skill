@@ -15,8 +15,22 @@ def width(s):
     return sum(0.5 if c.isascii() else 1.0 for c in s)
 
 
+LINES = {l["id"]: l.get("text", "") for sc in tl.get("scenes", []) for l in sc.get("lines", [])}
+PUNCT = "，。！？；：、,.!?;:…—"
+
+
+def gap_has_punct(a, b):
+    """原句里 a 和 b 之间有标点（如「为什么？因为」）就返回 True。"""
+    t = LINES.get(a["line"], "")
+    i = t.find(a["text"][-2:]) if len(a["text"]) >= 2 else t.find(a["text"])
+    if i < 0:
+        return False
+    j = t.find(b["text"][:1], i + 1)
+    return j > 0 and any(ch in PUNCT for ch in t[i:j])
+
+
 def join(a, b):
-    sep = " " if (a["text"][-1:].isascii() and b["text"][:1].isascii()) else ""
+    sep = " " if (a["text"][-1:].isascii() and b["text"][:1].isascii()) or gap_has_punct(a, b) else ""
     return {**a, "text": a["text"] + sep + b["text"], "end": b["end"], "duration": round(b["end"] - a["start"], 4)}
 
 

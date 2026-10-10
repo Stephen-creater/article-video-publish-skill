@@ -10,3 +10,4 @@
 - 复评 91 分，再修 3 处：命令里的变量写成可直接执行；codex_image.sh 自动建输出目录；换语速时旧 tts_result 一起改名保留。
 - 修 codex_image.sh：带参考图时 -i 放在最前，避免提示词被当成图片文件（Codex 报 No prompt provided）。
 - 换声出片：补充 ASR 误报的判断方法；语速经验加一条（生产者 1.25）。
+- merge_short_caps.py：原句两块之间有标点时合并后留空格（修「为什么因为Coding」连读）；语速经验加 OpenAI 2028 1.18；自检补充 check 已知项的判断。
