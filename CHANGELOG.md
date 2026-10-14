@@ -23,3 +23,4 @@
 - 封面.md：Codex 生图 10-14 起不可用（403，会退回代码画图），写明改走 Gemini 的步骤；新增 scripts/gemini_grab.mjs 抓 Gemini 原图。
 - 封面.md：更正配色规则，只用黑白红金四色内轮换（Stephen 看了绿蓝版觉得不好看）；gemini_grab.mjs 配置路径改为 ~/.cache/gemini_grab.json（ego-browser 收不到环境变量）。
 - 封面.md：配色规则改为「纯黄为主（#FFD600 平涂）、红只点缀」，依据是 B 站 AI 科技区前 30 封面取色（Stephen 嫌红太重、黄太浅，要求参考真实博主）。
+- 封面.md：字效必须沿用之前那批的立体字，Gemini 生图时同时上传一张旧最终封面当字效参考（Stephen 指出平字不好看）；黄色改回「饱和金黄，可带外发光」。
