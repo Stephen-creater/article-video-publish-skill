@@ -1,8 +1,10 @@
 // 从 Gemini 对话里抓最新一张图的「完整尺寸」原图（Gemini 的下载按钮在自动化里不触发浏览器下载，改为截网络请求再 fetch）。
-// 用法：先写配置 JSON {"space": TaskSpace编号, "out": "保存路径（不带扩展名）"}，路径放环境变量 GRAB_CFG，然后：
-//   GRAB_CFG=/path/grab.json ego-browser nodejs < gemini_grab.mjs
+// 用法：先把配置写到 ~/.cache/gemini_grab.json：{"space": TaskSpace编号, "out": "保存路径（不带扩展名）"}，然后：
+//   ego-browser nodejs < gemini_grab.mjs
+// （ego-browser 的脚本进程收不到 shell 环境变量，所以配置路径写死）
 const fs=await import("node:fs/promises");
-const cfg=JSON.parse(await fs.readFile(process.env.GRAB_CFG,"utf8"));
+const os=await import("node:os");
+const cfg=JSON.parse(await fs.readFile(os.homedir()+"/.cache/gemini_grab.json","utf8"));
 const t=await taskSpace(cfg.space); const p=t.page("p1");
 await p.waitForFunction(()=>[...document.querySelectorAll('model-response img')].some(i=>i.naturalWidth>400), undefined, {timeout:240000});
 await p.cdp("Network.enable",{maxResourceBufferSize:50000000,maxTotalBufferSize:200000000}); await p.events();

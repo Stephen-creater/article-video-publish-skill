@@ -21,3 +21,4 @@
 - 标题默认用视频原标题，不再先给 5 个候选（Stephen 要求）。
 - 封面.md：强调色轮换，不再每条都金黄；记下他喜欢的粗描边立体字效（2026-10-14）。
 - 封面.md：Codex 生图 10-14 起不可用（403，会退回代码画图），写明改走 Gemini 的步骤；新增 scripts/gemini_grab.mjs 抓 Gemini 原图。
+- 封面.md：更正配色规则，只用黑白红金四色内轮换（Stephen 看了绿蓝版觉得不好看）；gemini_grab.mjs 配置路径改为 ~/.cache/gemini_grab.json（ego-browser 收不到环境变量）。
